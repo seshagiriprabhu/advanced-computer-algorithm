@@ -1,5 +1,5 @@
-Sorting Algorithms
-==================
+Standard Sorting Algorithms
+===========================
 
 Currently includes
 ------------------
