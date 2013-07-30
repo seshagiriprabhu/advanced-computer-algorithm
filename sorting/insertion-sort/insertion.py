@@ -1,7 +1,8 @@
 # /usr/bin/python
+# A program to do insertion sort
 
 def insertion_sort(inp_list):
-    "This function is to sort the given input elements"
+    '''This function is to sort the given input elements'''
 
     for i in range(1, len(inp_list)):
         valueToInsert=inp_list[i]
@@ -14,7 +15,8 @@ def insertion_sort(inp_list):
     return inp_list
 
 def main():
-    "Main function"
+    '''Main function'''
+
     inp =[]
     s = int(raw_input('How many elements would you like to enter: '))
     for x in range(s):
