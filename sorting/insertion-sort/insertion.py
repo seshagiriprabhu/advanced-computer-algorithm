@@ -14,7 +14,7 @@ def insertion_sort(inp_list):
         print "While sorting: ", inp_list
     return inp_list
 
-def main():
+if __name__ =="__main__":
     '''Main function'''
 
     inp =[]
@@ -24,8 +24,4 @@ def main():
     print "Initial list: ", inp
     output_list = insertion_sort(inp) 
     print "Sorted list: ", output_list
-
-if __name__ == "__main__":
-    main()
-
 
