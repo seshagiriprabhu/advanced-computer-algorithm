@@ -8,23 +8,23 @@ class ListNode:
 
 class List:
     def __init__(self):
-        self.head = None
-        self.tail = None
+        self.head = self.tail = None
 
     def addFirstNode(self, newNode):
         ''' A function to add the first node to the list'''
 
-        self.head = newNode
-        self.tail = newNode
+        self.head = self.tail = newNode
 
     def addNodeTail(self,  data):
         ''' Function to add an element to the tail of the list '''
 
         newNode = ListNode(data)
 
+        # Empty list
         if self.head == None:
             self.addFirstNode(newNode)
-
+    
+        # Non-empty list
         else:
             self.tail.next = newNode
             self.tail = newNode
@@ -35,53 +35,61 @@ class List:
         '''Function to add an element to the head of the list '''
 
         newNode = ListNode(data)
-
+        
+        # Empty list
         if self.head == None:
             self.addFirstNode(newNode)
-
+        
+        # Non-empty list
         else:
             temp = self.head
             self.head = newNode
             self.head.next = temp
     
 
-    def delFirstNode (self):
+    def delFirstNode(self):
         ''' Function to delete the single node '''
 
-        self.head = None
-        self.tail = None
+        self.head = self.tail = None
 
     def delNodeTail(self):
         ''' Function to delete an element from the list '''
 
         node = self.head
+
+        # Empty list
         if self.head == None:
             print "List is empty"
             return 
 
+        # Single node list
         elif self.head == self.tail:
             self.delFirstNode()
             return 
 
+        # Multiple node list
         else:
             while node.next.next != None:
                 node = node.next
             node.next = None
             self.tail = node
 
-    def delNodeHead (self):
+    def delNodeHead(self):
         ''' Function to delete a node from head '''
 
         node = self.head
 
+        # Empty list
         if self.head == None:
             print "List is empty"
             return
 
+        # Single node list
         if self.head == self.tail:
             self.delFirstNode()
             return    
         
+        # Multi-node list
         if self.head != self.tail:
             node = node.next
             self.head = node
@@ -93,15 +101,18 @@ class List:
 
         node = self.head
         found = False
-       
+    
+        # If there's only one node and it doesn't contain the given element
         if self.head == self.tail and self.head.data != element:
             print "Element not found in the list"
             return
         
+        # If the head node contains the element
         if self.head.data == element:
-            self.delNodeHead(element)
+            self.delNodeHead()
             return
         
+        # To check if the node is in the rest of the list
         while node.next != None:
             if node.next.data == element:
                 found = True
@@ -110,7 +121,7 @@ class List:
             else:
                 node = node.next
 
-        # If node found
+        # If node was found
         if found:
             if node.next.next != None:
                 node.next = node.next.next
@@ -118,10 +129,13 @@ class List:
             else:
                 self.delNodeTail()
 
+        # If the element was not found in the list
         else:
             print "Element not found in the list"
       
 def display(list):
+    ''' Function to display the linked list '''
+
     print "\n+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+"
     node = list.head
     if list.head == None:
