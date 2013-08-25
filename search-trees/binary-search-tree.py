@@ -26,7 +26,7 @@ class TreeNode:
     def insertTrainNumberNode (self, trainNumber, trainName, trainSource, trainDest):
         ''' A function to insert Node based on train number'''
 
-        if self.root == None:
+        if self.root == None: # if there is only root node
             self.root = Node(trainNumber, trainName, trainSource, trainDest)
 
         else:
@@ -34,14 +34,14 @@ class TreeNode:
 
             while True:
                 if trainNumber < current.trainNumber:
-                    if current.left == None:
-                        current.left = Node(trainNumber, trainName, trainSource, trainDest)
+                    if current.left == None: # Reached the left most leaf node
+                        current.left = Node(trainNumber, trainName, trainSource, trainDest) 
                         break
                     else:
                         current = current.left
                     
                 elif trainNumber > current.trainNumber:
-                    if current.right == None:
+                    if current.right == None: # Reached the right most leaf node
                         current.right = Node(trainNumber, trainName, trainSource, trainDest)
                         break
                     else:
@@ -128,7 +128,7 @@ class TreeNode:
                     break
 
     def bft(self, choice):
-        ''' Performs BFT based on the type of input '''
+        ''' Performs Breadth first traversal '''
 
         self.root.level = 0
         queue = [self.root]
@@ -138,14 +138,14 @@ class TreeNode:
         while len(queue) > 0:
             current_node = queue.pop(0)
 
-            if current_node.level > current_level:
+            if current_node.level > current_level: 
                 current_level += 1
-                out.append("\n")
+                out.append("\n") # A newline is appended to the ouput list in-order to differntiate levels
 
-            if choice == 1:
+            if choice == 1: 
                 out.append(str(current_node.trainNumber) + " " )
                       
-            if choice == 2:
+            if choice == 2: 
                 out.append(str(current_node.trainName) + " " )
 
             if choice == 3:
@@ -166,22 +166,23 @@ class TreeNode:
 
     def bst(self, search, choice):
         ''' Performs binary search based on the choice '''
+
         current = self.root
 
-        print "+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+"
+        print "\n+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+"
         print "+                 Search Results                      +"
-        print "+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+\n"
+        print "+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+"
         print "Did you mean: " + str(search) + " ?"
         if choice == 1:
             while True:
-                if search < current.trainNumber:
-                    if current.left == None:
+                if search < current.trainNumber: # Traverse through the left subtree
+                    if current.left == None:     # If there is no child node - Exit
                         break
                     else:
                         current = current.left
                     
-                elif search > current.trainNumber:
-                    if current.right == None:
+                elif search > current.trainNumber:  # Traverse through the right subtree
+                    if current.right == None:       # If there is no right child node - 
                         break
                     else:
                         current = current.right
@@ -265,7 +266,8 @@ class TreeNode:
                     print "You've entered an invalid train destination"
                     break
 
-def stringGen (size = 20, chars = string.ascii_uppercase):
+def stringGen (size = 20, chars = string.ascii_lowercase):
+    ''' A function to generate strings for train name, source and destination '''
     return ''.join (random.choice(chars) for x in range(size))
 
 if __name__=="__main__":
@@ -285,12 +287,12 @@ if __name__=="__main__":
     traintrainName = []
     trainSrc = []
     trainDest = []
-    trainNumber = range(10)
-    for x in range(10): traintrainName.append(stringGen())
-    for x in range(10): trainSrc.append(stringGen())
-    for x in range(10): trainDest.append(stringGen())
-    shuffle(trainNumber)
-    inp = zip(trainNumber, traintrainName, trainSrc, trainDest)
+    trainNumber = range(100000)   # Generates 10^5 random numbers
+    for x in range(100000): traintrainName.append(stringGen())  # Generates 10^5 random train names
+    for x in range(100000): trainSrc.append(stringGen())        # Generates 10^5 random train sources
+    for x in range(100000): trainDest.append(stringGen())       # Generates 10^5 random train destination
+    shuffle(trainNumber)    # Shuffles the random numbers generated
+    inp = zip(trainNumber, traintrainName, trainSrc, trainDest) # Generates tuples from the random numbers
 
     print "+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+"
     print "+         Inserting random numbers into tree          +"
@@ -303,29 +305,29 @@ if __name__=="__main__":
     print "4. Based on train destination"
     choice = int(raw_input("Enter your choice: "))
    
-    for x in inp:
+    for x in inp: # Traversing tuples from the whole list
         count = 0
-        for y in x:
-            if count == 0:
+        for y in x: # Traversing elements in a tuple
+            if count == 0:      # Train number
                 trainNumber = y
-            elif count == 1:
+            elif count == 1:    # Train Name
                 trainName = y
-            elif count == 2:
+            elif count == 2:    # Train source
                 trainSrc = y
-            else:
-                trainDest = y
+            else:               # Train destination
+                trainDest = y 
             count = count + 1
 
-        if choice == 1:
+        if choice == 1:     # if based on train number
             tree.insertTrainNumberNode(trainNumber, trainName, trainSrc, trainDest)
 
-        elif choice == 2:
+        elif choice == 2:   # if based on train name
             tree.insertTrainNameNode(trainNumber, trainName, trainSrc, trainDest)
 
-        elif choice == 3:
+        elif choice == 3:   # if based on train source
             tree.insertTrainSourceNode(trainNumber, trainName, trainSrc, trainDest)
 
-        elif choice == 4:
+        elif choice == 4:   # if based on train destination
             tree.insertTrainDestinationNode(trainNumber, trainName, trainSrc, trainDest)
 
         else: 
@@ -336,24 +338,41 @@ if __name__=="__main__":
     print "+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+"
     tree.bft(choice)
 
-    print "+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+"
-    print "+                 Binary tree search                  +"
-    print "+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+"
 
     while True: 
-        if choice == 1:
+        print "\n+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+"
+        print "+                     Binary search                   +"
+        print "+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+"
+        if choice == 1: # Search based on train number
             search = int(raw_input("Enter the train number which you want to search: "))
             tree.bst(search, choice)
 
-        elif choice == 2:
+        elif choice == 2:   # Search based on train name
             search = raw_input("Enter the train name which you want to search: ")
             tree.bst(search, choice)
 
-        elif choice == 3:
+        elif choice == 3:   # Search based on train source
             search = raw_input("Enter the train source which you want to search: ")
             tree.bst(search, choice)
     
-        elif choice == 4:
+        elif choice == 4:   # Search based on train destination
             search = raw_input("Enter the train destination which you want to search: ")
             tree.bst(search, choice)
+      
         
+        print "+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+"
+        again = raw_input("Would you like to search again [y/n]? ")
+        if again == 'y' or again == 'Y':
+            continue
+        elif again == 'n' or again == 'N':
+            print "\n+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+"
+            print "+                     Thank you!!                     +"
+            print "+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+"
+            break
+        else:
+            print "Invalid input. Program is going to exit!"
+            print "\n+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+"
+            print "+                     Thank you!!                     +"
+            print "+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+"
+            break
+
