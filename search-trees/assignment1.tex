@@ -1,0 +1,102 @@
+% To produce pdf under linux, run
+% pdflatex HW2.tex 
+  
+\documentclass{article}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{upquote}
+\usepackage{courier}
+\usepackage{caption}
+\usepackage{verbatim} 
+\usepackage{hyperref}
+\usepackage{qtree}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=shadowbox,
+	rulesepcolor=\color{black},
+  	language=bash,
+  	aboveskip=3mm,
+  	belowskip=3mm,
+  	showstringspaces=false,
+  	columns=flexible,
+  	basicstyle={\small\ttfamily},
+  	numbers=none,
+  	numberstyle=\tiny\color{gray},
+  	keywordstyle=\color{blue},
+  	commentstyle=\color{dkgreen},
+  	stringstyle=\color{red},
+  	breaklines=true,
+  	breakatwhitespace=true
+  	tabsize=3
+}
+\title{Algorithm Assignment 1}
+\author{Seshagiri Prabhu}
+
+\begin{document}
+\maketitle
+\begin{center}
+\href{mailto:seshagiriprabhu@gmail.com}{seshagiriprabhu@gmail.com}
+\end{center}
+\date{}
+\section{Time complexity of program}
+1. Derive the time complexity of the algorithm using Asymptotic analysis.
+
+
+\begin{lstlisting}
+# /usr/bin/python 
+
+def bst(self, search, choice):
+	''' Performs binary search based on the choice '''
+	
+	current = self.root
+	while True:
+		if search < current.trainNumber:  # C * n / 2
+    		if current.left == None:     
+        		break
+	        else:
+    	        current = current.left
+                   
+        elif search > current.trainNumber:  # C * n / 2
+           	if current.right == None:       
+            	break
+	        else:
+    	        current = current.right
+    	        
+        elif search == current.trainNumber: # C * 1
+            break
+                
+        else:	# C * 1
+        	break
+        	
+\end{lstlisting}
+
+Lets take a simple example in which we search for node-41 from a huge BST.
+\Tree[.Root [.Node-1 [.Node-3 Node-7 ]
+               [.Node-4 [.Node-8  ]]]
+          [.Node-2 [.Node-5 Node-9 ]
+                [.Node-6 [.Node-10 [.Node-17 Node-26 ]
+                           [.Node-18 [.Node-28 Node-29 ]
+                                [.Node-39 [.Node-40 Node-78 ]
+                                      \qroof{\textit{search this}}.Node-41 ]]]]]]
+                                      
+The peculiarity of this searching technique is that at each levels half of the nodes are eliminated.\\
+
+This is the recursive equation of the searching algorithm we have used.
+$T(n)$ = $T(n/2)$ + 1 \\
+
+
+According to 2nd master's theorem:\\
+$f(n)$ = $\theta(n^{\log _2 \left(1 \right)})$ \\
+$(f(n)$ = $\theta(1)$
+
+Hence \textbf{$T(n)$ = $\theta(f(n))$ = $\theta(\log  \left(n \right))$}           
+
+\section{Implementation of the program}
+
+\end{document}
