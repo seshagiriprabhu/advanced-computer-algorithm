@@ -1,16 +1,66 @@
-*.py[cod]
+# Compiled Object files
+*.slo
+*.lo
+*.o
 
-# C extensions
+# Compiled Dynamic libraries
 *.so
+*.dylib
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.class
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+#Tex related files
+*.nav
+*.snm
+*.aux
+*.glo
+*.idx
+*.log
+*.toc
+*.ist
+*.acn
+*.acr
+*.alg
+*.bbl
+*.blg
+*.dvi
+*.glg
+*.gls
+*.ilg
+*.ind
+*.lof
+*.lot
+*.maf
+*.mtc
+*.mtc1
+*.out
+*.synctex.gz
+*.backup
+*.vrb
+*.tex~
+
+# Python-django
+*.py[cod]
 
 # Packages
 *.egg
-*.egg-info
+*.pot
 dist
 build
 eggs
 parts
+bin/*
 bin
+__minitage__*
 var
 sdist
 develop-eggs
@@ -33,3 +83,57 @@ nosetests.xml
 .mr.developer.cfg
 .project
 .pydevproject
+
+# Numerous always-ignore extensions
+*.pyc
+*.diff
+*.err
+*.orig
+*.log
+*.rej
+*.swo
+*.swp
+*.vi
+*.cache
+*.egg-info
+*~
+*#
+
+# Folders to ignore
+.hg
+.svn
+.CVS
+.idea
+_assets
+_design
+_content
+_tmp
+dist
+build
+_build
+
+# OS or Editor folders
+.DS_Store
+Thumbs.db
+.cache
+.project
+.settings
+.tmproj
+*.esproj
+nbproject
+*.sublime-project
+*.sublime-workspace
+.tm_properties
+._*
+
+# Unit test / coverage reports
+.coverage
+.tox
+nosetests.xml
+
+# Static files
+static/*
+communicator/whoosh_index/*
+
+# DB files
+*.db
