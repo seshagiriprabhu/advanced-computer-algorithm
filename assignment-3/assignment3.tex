@@ -1,0 +1,136 @@
+% To produce pdf under linux, run
+% pdflatex HW2.tex 
+  
+\documentclass{article}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{upquote}
+\usepackage{courier}
+\usepackage{caption}
+\usepackage{verbatim} 
+\usepackage{hyperref}
+\usepackage{qtree}
+\usepackage{sagetex}
+\newcommand\Colorhref[3][blue]{\href{#2}{\small\color{#1}#3}}
+
+\usepackage{array}
+\setlength\arrayrulewidth{.4pt}
+\setlength\tabcolsep{3pt}
+\newcolumntype{L}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{M}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=shadowbox,
+	rulesepcolor=\color{black},
+  	language=bash,
+  	aboveskip=3mm,
+  	belowskip=3mm,
+  	showstringspaces=false,
+  	columns=flexible,
+  	basicstyle={\small\ttfamily},
+  	numbers=none,
+  	numberstyle=\tiny\color{gray},
+  	keywordstyle=\color{blue},
+  	commentstyle=\color{dkgreen},
+  	stringstyle=\color{red},
+  	breaklines=true,
+  	breakatwhitespace=true
+  	tabsize=3
+}
+\title{Algorithm Assignment 3}
+\author{Seshagiri Prabhu}
+
+\begin{document}
+\maketitle
+\begin{center}
+\href{mailto:seshagiriprabhu@gmail.com}{seshagiriprabhu@gmail.com}
+\end{center}
+\date{}
+\section{Time complexity of program}
+1. Derive the time complexity of the algorithm using Asymptotic analysis.
+
+
+\begin{lstlisting}
+# /usr/bin/python
+
+#V = vertex list, A = adjacency list, r = root
+def prim(V, A, r): # O(V ^ 3)
+    ''' A function to calculate the MST using prim's algorithm '''
+    u = 0
+    v = 0
+    result =[]
+    
+    # initialize and set each value of the array P (pi) to none
+    # pi holds the parent of u, so P(v)=u means u is the parent of v
+    P=[None]*len(V)
+
+    # initialize and set each value of the array K (key) to some large number (simulate infinity)
+    K = [999999]*len(V)
+
+    # initialize the min queue and fill it with all vertices in V
+    Q=[0]*len(V)
+    for u in range(len(Q)):
+        Q[u] = V[u]
+
+    # set the key of the root to 0
+    K[r] = 0
+    decreaseKey(Q, K)    # maintain the min queue
+
+    # loop while the min queue is not empty
+    while len(Q) > 0:	# O(V ^ 2)  
+    	# pop the first vertex off the min queue 
+        u = extractMin(Q)    # O(Constant)
+        result.append(u)
+        # loop through the vertices adjacent to u
+        Adj = adjacent(A, u)  # O(V)
+        for v in Adj:         # O(V ^ 3)
+            w = A[u][v]    # get the weight of the edge uv
+            #print "w(" + chr(u+97) + ', ' + chr(v+97) + '): ' + str(w)
+
+            # proceed if v is in Q and the weight of uv is less than v's key
+            if Q.count(v) > 0 and w < K[v]:
+                # set v's parent to u
+                P[v] = u
+                # v's key to the weight of uv
+                K[v] = w
+                # maintain the min queue
+                decreaseKey(Q, K)    # O(V)
+    return result
+
+\end{lstlisting}
+
+As the adjacency matrix is used, the complexity is in polynomial order:- $O(V^{2})$ \\
+
+\begin{sagesilent}
+H = [(100, 0.105358123800000),
+ (200, 0.761367082600000),
+ (300, 2.51947116850000),
+ (400, 5.99299383160000),
+ (500, 11.6706569195000),
+ (600, 20.2638969421000),
+ (700, 31.8211338520000),
+ (800, 47.3926920891000),
+ (900, 67.4489781857000),
+ (1000, 92.3331990242000)]
+\end{sagesilent}
+
+\begin{flushleft}
+\sageplot[scale=0.61]{list_plot(H, plotjoined=True, color="red", legend_label="Prim's using Adjacency matrix, Complexity: $O(V^{2})$ ", frame=True,axes_labels=['No of vertices','Time taken (s)'], axes=False)}
+\end{flushleft}
+
+%\sageplot[scale=0.61]{list_plot(H, plotjoined=True, color="red", legend_label="Prim's using Adjacency matrix, Complexity: $O(V^{2})$ ", frame=True,axes_labels=['No of vertices','Time taken (s)'], axes=False)}
+
+\begin{flushleft}
+\sageplot[scale=0.70]{plot(lambda x:x*log(x,e), 1, 1000, color="red", frame=True, axes_labels=['No of vertices','Time taken (ms)'], axes=False, legend_label="Prim's using Adjacency matrix, Complexity: $O(Elog(V))$ ")}
+\end{flushleft}
+%, color="red", legend_label="Prim's using binary heap, Complexity: $O(E\log(V))$", frame=True, axes_labels=['No of vertices','Time taken (ms)'], axes=False)}
+
+\end{document}
